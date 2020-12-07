@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using TabloidCLI.Models;
+using TabloidCLI.Repositories;
 
 namespace TabloidCLI.UserInterfaceManagers
 {
@@ -11,7 +12,7 @@ namespace TabloidCLI.UserInterfaceManagers
         private BlogRepository _BlogRepository;
         private string _connectionString;
 
-        public AuthorManager(IUserInterfaceManager parentUI, string connectionString)
+        public BlogManager(IUserInterfaceManager parentUI, string connectionString)
         {
             _parentUI = parentUI;
             _BlogRepository = new BlogRepository(connectionString);
@@ -20,12 +21,12 @@ namespace TabloidCLI.UserInterfaceManagers
 
         public IUserInterfaceManager Execute()
         {
-            Console.WriteLine("Author Menu");
-            Console.WriteLine(" 1) List Authors");
-            Console.WriteLine(" 2) Author Details");
-            Console.WriteLine(" 3) Add Author");
-            Console.WriteLine(" 4) Edit Author");
-            Console.WriteLine(" 5) Remove Author");
+            Console.WriteLine("Blog Menu");
+            Console.WriteLine(" 1) List Blogs");
+            Console.WriteLine(" 2) Blog Details");
+            Console.WriteLine(" 3) Add Blog");
+            Console.WriteLine(" 4) Edit Blog");
+            Console.WriteLine(" 5) Remove Blog");
             Console.WriteLine(" 0) Go Back");
 
             Console.Write("> ");
@@ -74,7 +75,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.Write("URL: ");
             blog.Url = Console.ReadLine();
 
-            _blogRepository.Insert(blog);
+            _BlogRepository.Insert(blog);
         }
 
 
