@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
 using TabloidCLI.Models;
 
+
 namespace TabloidCLI.Repositories
 {
     public class PostRepository : DatabaseConnector, IRepository<Post>
