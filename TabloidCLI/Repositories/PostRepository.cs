@@ -22,7 +22,6 @@ namespace TabloidCLI.Repositories
 
                     while (reader.Read())
                     {
-                        // AUTHOR AND BLOG ALSO NEED TO GO IN HERE
                         Post post = new Post
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
@@ -117,7 +116,22 @@ namespace TabloidCLI.Repositories
 
         public void Insert(Post post)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"INSERT INTO Post (Title, URL, PublishDateTime, AuthorId, BlogId)
+                                                   VALUES (@title, @url, @publish, @authorId, @blogId)";
+                    cmd.Parameters.AddWithValue("@title", post.Title);
+                    cmd.Parameters.AddWithValue("@url", post.Url);
+                    cmd.Parameters.AddWithValue("@publish", post.PublishDateTime);
+                    cmd.Parameters.AddWithValue("@authorId", post.Author);
+                    cmd.Parameters.AddWithValue("@blogId", post.Blog);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         public void Update(Post post)
