@@ -49,9 +49,9 @@ namespace TabloidCLI.UserInterfaceManagers
                 case "3":
                     Add();
                     return this;
-                //case "4":
-                //    Edit();
-                //    return this;
+                case "4":
+                    Edit();
+                    return this;
                 //case "5":
                 //    Remove();
                 //    return this;
@@ -146,8 +146,6 @@ namespace TabloidCLI.UserInterfaceManagers
             {
                 entryToEdit.Content = content;
             }
-
-            entryToEdit.CreateDateTime = DateTime.UtcNow;
 
             _journalRepository.Update(entryToEdit);
 
