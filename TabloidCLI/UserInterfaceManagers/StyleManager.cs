@@ -6,8 +6,9 @@ namespace TabloidCLI.UserInterfaceManagers
 {
     class StyleManager : IUserInterfaceManager
     {
-
+        //plug this into a return to send the user back to the main menu
         private readonly IUserInterfaceManager _parentUI;
+        //a dictionary of al possible colors
         private Dictionary<int, string> colors = new Dictionary<int, string>
         {
             { 1, "Black" },
@@ -35,8 +36,10 @@ namespace TabloidCLI.UserInterfaceManagers
         public IUserInterfaceManager Execute()
         {
             Console.WriteLine("Pick a new Background Color");
+            //iterates through the colors and gives a preview.  
             foreach (KeyValuePair<int, string> pair in colors)
             {
+                //takes in a string from the dictionary and parses it to a consolecolor object
                 Console.BackgroundColor =  (ConsoleColor)Enum.Parse(typeof(ConsoleColor), pair.Value);
                 Console.WriteLine($"{pair.Key}) {pair.Value}");
                 Console.ResetColor();
@@ -46,10 +49,12 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.Write("> ");
             int choice;
             string stringChoice = Console.ReadLine();
+            
             try
             {
                 choice = int.Parse(stringChoice);
             }
+            //checks for a number
             catch 
             {
                 Console.WriteLine("Invalid Selection");
@@ -63,6 +68,7 @@ namespace TabloidCLI.UserInterfaceManagers
                     Console.BackgroundColor = (ConsoleColor)Enum.Parse(typeof(ConsoleColor), colors.GetValueOrDefault(choice));
                     return _parentUI;
                 }
+                //checks for a valid color
                 catch (Exception)
                 {
                     Console.WriteLine("Invalid Selection");
