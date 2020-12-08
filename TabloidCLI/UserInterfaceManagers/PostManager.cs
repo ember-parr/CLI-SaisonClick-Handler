@@ -55,10 +55,19 @@ namespace TabloidCLI.UserInterfaceManagers
         private void List()
         {
             List<Post> posts = _postRepository.GetAll();
+            Console.WriteLine();
+            Console.WriteLine("___________ All Posts ___________");
+            Console.WriteLine();
             foreach (Post post in posts)
             {
-                Console.WriteLine(post.Title);
+                Console.WriteLine($"Title: {post.Title}");
+                Console.WriteLine($"Written By: {post.Author.FirstName} {post.Author.LastName}");
+                Console.WriteLine($"URL: {post.Url}");
+                Console.WriteLine($"Blog: {post.Blog.Title}");
+                Console.WriteLine("---------------------------------");
             }
+            Console.WriteLine();
+            Console.WriteLine();
         }
 
         private void Add()
