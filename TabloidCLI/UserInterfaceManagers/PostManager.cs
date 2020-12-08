@@ -31,6 +31,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine("Post Menu");
             Console.WriteLine(" 1) List Posts");
             Console.WriteLine(" 2) Add Post");
+            Console.WriteLine(" 4) Remove A Post");
             Console.WriteLine(" 0) Go Back");
 
             Console.Write("> ");
@@ -43,6 +44,9 @@ namespace TabloidCLI.UserInterfaceManagers
                     return this;
                 case "2":
                     Add();
+                    return this;
+                case "4":
+                    Remove();
                     return this;
                 case "0":
                     return _parentUI;
@@ -69,6 +73,46 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine();
             Console.WriteLine();
         }
+
+
+        public Post Choose(string prompt = null)
+        {
+            if (prompt == null)
+            {
+                prompt = "Please choose a post: ";
+            }
+
+            Console.WriteLine(prompt);
+
+            List<Post> posts = _postRepository.GetAll();
+
+            for (int i = 0; i < posts.Count; i++)
+            {
+                Post post = posts[i];
+                Console.WriteLine($" {i + 1}) {post.Title}");
+            }
+            Console.Write("> ");
+
+
+            string input = Console.ReadLine();
+            try
+            {
+                int choice = int.Parse(input);
+                return posts[choice - 1];
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Invalid Selection");
+                return null;
+            }
+
+        }
+
+
+
+
+
+
 
         private void Add()
         {
@@ -97,6 +141,15 @@ namespace TabloidCLI.UserInterfaceManagers
             
 
             _postRepository.Insert(post);
+        }
+
+        private void Remove()
+        {
+            Post postToDelete = Choose("Which Post Would You Like To Delete? ");
+            if (postToDelete != null)
+            {
+                _postRepository.Delete(postToDelete.Id);
+            }
         }
 
     }
