@@ -52,9 +52,9 @@ namespace TabloidCLI.UserInterfaceManagers
                 case "4":
                     Edit();
                     return this;
-                //case "5":
-                //    Remove();
-                //    return this;
+                case "5":
+                    Remove();
+                    return this;
                 case "0":
                     return _parentUI;
                 default:
@@ -66,10 +66,11 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void List()
         {
+            Console.WriteLine("_______JOURNAL ENTRY LIST_______");
             List<Journal> journals = _journalRepository.GetAll();
             foreach (Journal journal in journals)
             {
-                Console.WriteLine("---------------------------------");
+                Console.WriteLine("");
                 Console.WriteLine(journal.Title);
                 Console.WriteLine(journal.CreateDateTime);
                 Console.WriteLine(journal.Content);
@@ -149,6 +150,14 @@ namespace TabloidCLI.UserInterfaceManagers
 
             _journalRepository.Update(entryToEdit);
 
+        }
+        private void Remove()
+        {
+            Journal entryToDelete = Choose("Which journal entry would you like to remove?");
+            if (entryToDelete != null)
+            {
+                _journalRepository.Delete(entryToDelete.Id);
+            }
         }
     }
 }
