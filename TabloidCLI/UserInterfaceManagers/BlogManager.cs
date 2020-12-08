@@ -37,8 +37,8 @@ namespace TabloidCLI.UserInterfaceManagers
                     List();
                     return this;
                 //case "2":
-                //    Blog author = Choose();
-                //    if (author == null)
+                //    Blog blog = Choose();
+                //    if (blog == null)
                 //    {
                 //        return this;
                 //    }
