@@ -50,7 +50,7 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void Add()
         {
-            Console.WriteLine("New Post");
+            Console.WriteLine("Add Post");
             Post post = new Post();
 
             Console.Write("Title: ");
@@ -65,11 +65,12 @@ namespace TabloidCLI.UserInterfaceManagers
             Author chosenAuthor = _authorRepo.Choose("Select an author: ");
             Blog chosenBlog = _blogRepo.Choose("Select a blog: ");
 
-
+            Console.Write("Publish Date (input as mm/dd/yyyy): ");
+            DateTime inputDate = DateTime.Parse(Console.ReadLine());
 
             post.Blog = chosenBlog;
             post.Author = chosenAuthor;
-            post.PublishDateTime = DateTime.UtcNow;
+            post.PublishDateTime = inputDate;
 
             
 
