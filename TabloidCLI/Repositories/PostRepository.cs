@@ -18,7 +18,10 @@ namespace TabloidCLI.Repositories
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT Id, Title, URL, PublishDateTime, AuthorId, BlogId FROM Post";
+                    cmd.CommandText = @"SELECT Post.Id, Post.Title, Post.URL, PublishDateTime, Post.AuthorId, Author.FirstName, Author.LastName, Author.Bio, Post.BlogId, Blog.Title as BlogTitle, Blog.Url as BlogUrl
+                                        FROM Post
+                                        JOIN Author ON Post.AuthorId = Author.Id
+                                        JOIN Blog ON Post.BlogId = Blog.Id";
                     SqlDataReader reader = cmd.ExecuteReader();
                     List<Post> posts = new List<Post>();
 
