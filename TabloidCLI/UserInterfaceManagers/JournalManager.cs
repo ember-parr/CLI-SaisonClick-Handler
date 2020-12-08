@@ -86,17 +86,9 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.Write("Entry Title: ");
             entry.Title = Console.ReadLine();
 
-
-            while (true)
-            {
-                Console.Write("Create your entry here: ");
-                entry.Content = Console.ReadLine();
-                if (entry.Content == "exit")
-                {
-                    break;
-                }
-            }
-
+            Console.Write("Create your entry here: ");
+            entry.Content = Console.ReadLine();
+             
             entry.CreateDateTime = DateTime.Now;
 
             _journalRepository.Insert(entry);
