@@ -63,11 +63,17 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void List()
         {
+            Console.WriteLine("");
+            Console.WriteLine("_____________________________________");
+            Console.WriteLine("|___________All Authors________________|");
+            Console.WriteLine("");
             List<Author> authors = _authorRepository.GetAll();
             foreach (Author author in authors)
             {
                 Console.WriteLine(author);
             }
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine();
         }
 
         public Author Choose(string prompt = null)
