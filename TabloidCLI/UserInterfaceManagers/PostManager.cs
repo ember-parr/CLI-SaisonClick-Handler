@@ -11,13 +11,18 @@ namespace TabloidCLI.UserInterfaceManagers
         private readonly IUserInterfaceManager _parentUI;
         private PostRepository _postRepository;
         private string _connectionString;
+        private AuthorManager _authorRepo;
+
 
         public PostManager(IUserInterfaceManager parentUI, string connectionString)
         {
+            _authorRepo = new AuthorManager(parentUI, connectionString);
             _parentUI = parentUI;
             _postRepository = new PostRepository(connectionString);
+            //_authorRepo = new AuthorRepository(connectionString);
             _connectionString = connectionString;
         }
+        //AuthorManager authorManage = new AuthorManager(this, _connectionString);
 
         public IUserInterfaceManager Execute()
         {
@@ -53,8 +58,15 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.Write("URL: ");
             post.Url = Console.ReadLine();
 
-            Console.Write("Publish Date: ");
-            post.PublishDateTime = DateTime.Parse(Console.ReadLine());
+            Console.Write("Author: ");
+
+            Author chosenAuthor = _authorRepo.Choose("Select an author: ");
+
+
+            post.Author = chosenAuthor;
+            post.PublishDateTime = DateTime.Now;
+
+
 
             // author and blog go here
 
