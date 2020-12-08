@@ -37,18 +37,37 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine("Pick a new Background Color");
             foreach (KeyValuePair<int, string> pair in colors)
             {
-                Console.BackgroundColor = new ConsoleColor() pair.Value;
+                Console.BackgroundColor =  (ConsoleColor)Enum.Parse(typeof(ConsoleColor), pair.Value);
                 Console.WriteLine($"{pair.Key}) {pair.Value}");
+                Console.ResetColor();
             }
             Console.WriteLine(" 0) Go Back");
 
             Console.Write("> ");
-            string choice = Console.ReadLine();
-
-            if (choice != "0")
+            int choice;
+            string stringChoice = Console.ReadLine();
+            try
             {
-                Console.BackgroundColor = ConsoleColor.Blue;
+                choice = int.Parse(stringChoice);
+            }
+            catch 
+            {
+                Console.WriteLine("Invalid Selection");
                 return this;
+            }
+
+            if (choice != 0)
+            {
+                try
+                {
+                    Console.BackgroundColor = (ConsoleColor)Enum.Parse(typeof(ConsoleColor), colors.GetValueOrDefault(choice));
+                    return _parentUI;
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Invalid Selection");
+                    return this;
+                }
             }
             return _parentUI;
 
