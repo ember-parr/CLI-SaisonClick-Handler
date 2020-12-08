@@ -123,5 +123,34 @@ namespace TabloidCLI.UserInterfaceManagers
                 return null;
             }
         }
+
+        private void Edit()
+        {
+            Journal entryToEdit = Choose("Which journal entry would you like to edit?");
+            if (entryToEdit == null)
+            {
+                return;
+            }
+
+            Console.WriteLine();
+            Console.Write("New title for journal entry (blank to leave unchanged): ");
+            string title = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(title))
+            {
+                entryToEdit.Title = title;
+            }
+
+            Console.Write("New content for journal entry (blank to leave unchanged): ");
+            string content = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(content))
+            {
+                entryToEdit.Content = content;
+            }
+
+            entryToEdit.CreateDateTime = DateTime.UtcNow;
+
+            _journalRepository.Update(entryToEdit);
+
+        }
     }
 }
