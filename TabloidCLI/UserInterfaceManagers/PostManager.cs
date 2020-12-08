@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using TabloidCLI.Models;
 using TabloidCLI.Repositories;
+using System.Timers;
+using System.Threading;
 
 namespace TabloidCLI.UserInterfaceManagers
 {
@@ -28,6 +30,7 @@ namespace TabloidCLI.UserInterfaceManagers
 
         public IUserInterfaceManager Execute()
         {
+            Console.Clear();
             Console.WriteLine("------------------------------");
             Console.WriteLine("|          Post Menu          |");
             Console.WriteLine("------------------------------");
@@ -45,18 +48,25 @@ namespace TabloidCLI.UserInterfaceManagers
             switch (choice)
             {
                 case "1":
+                    Console.Clear();
                     List();
+                    Console.Write("Press any key to go back to Post Menu");
+                    Console.ReadKey();
                     return this;
                 case "2":
+                    Console.Clear();
                     Add();
                     return this;
                 case "3":
+                    Console.Clear();
                     Edit();
                     return this;
                 case "4":
+                    Console.Clear();
                     Remove();
                     return this;
                 case "0":
+                    Console.Clear();
                     return _parentUI;
                 default:
                     Console.WriteLine("Invlid Selection");
