@@ -18,13 +18,16 @@ namespace TabloidCLI.UserInterfaceManagers
 
         public IUserInterfaceManager Execute()
         {
-            Console.WriteLine("Tag Menu");
+            Console.WriteLine("------------------------------");
+            Console.WriteLine("|         Tag Menu          |");
+            Console.WriteLine("------------------------------");
             Console.WriteLine(" 1) List Tags");
             Console.WriteLine(" 2) Add Tag");
             Console.WriteLine(" 3) Edit Tag");
             Console.WriteLine(" 4) Remove Tag");
             Console.WriteLine(" 0) Go Back");
-
+            Console.WriteLine("------------------------------");
+            Console.WriteLine();
             Console.Write("> ");
             string choice = Console.ReadLine();
             switch (choice)
@@ -52,13 +55,15 @@ namespace TabloidCLI.UserInterfaceManagers
         private void List()
         {
             Console.WriteLine("");
-            Console.WriteLine("------------------------------");
+            Console.WriteLine("____________All Tags________________");
+            Console.WriteLine("");
             List<Tag> tags = _tagRepository.GetAll();
             foreach (Tag tag in tags)
             {
                 Console.WriteLine(tag);
             }
             Console.WriteLine("------------------------------");
+            Console.WriteLine();
         }
 
         private void Add()

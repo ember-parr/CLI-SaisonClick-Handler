@@ -8,7 +8,7 @@ namespace TabloidCLI.UserInterfaceManagers
     {
         //plug this into a return to send the user back to the main menu
         private readonly IUserInterfaceManager _parentUI;
-        //a dictionary of al possible colors
+        //a dictionary of all possible colors
         private Dictionary<int, string> colors = new Dictionary<int, string>
         {
             { 1, "Black" },
@@ -40,7 +40,7 @@ namespace TabloidCLI.UserInterfaceManagers
             foreach (KeyValuePair<int, string> pair in colors)
             {
                 //takes in a string from the dictionary and parses it to a consolecolor object
-                Console.BackgroundColor =  (ConsoleColor)Enum.Parse(typeof(ConsoleColor), pair.Value);
+                Console.BackgroundColor = (ConsoleColor)Enum.Parse(typeof(ConsoleColor), pair.Value);
                 Console.WriteLine($"{pair.Key}) {pair.Value}");
                 Console.ResetColor();
             }
@@ -49,13 +49,13 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.Write("> ");
             int choice;
             string stringChoice = Console.ReadLine();
-            
+
             try
             {
                 choice = int.Parse(stringChoice);
             }
             //checks for a number
-            catch 
+            catch
             {
                 Console.WriteLine("Invalid Selection");
                 return this;
@@ -76,15 +76,6 @@ namespace TabloidCLI.UserInterfaceManagers
                 }
             }
             return _parentUI;
-
-
-            //switch (choice)
-            //{
-            //    case "1":
-            //        List();
-            //        return this;
-
-            //}
         }
     }
 }
