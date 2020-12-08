@@ -37,6 +37,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine("Pick a new Background Color");
             foreach (KeyValuePair<int, string> pair in colors)
             {
+                Console.BackgroundColor = new ConsoleColor() pair.Value;
                 Console.WriteLine($"{pair.Key}) {pair.Value}");
             }
             Console.WriteLine(" 0) Go Back");
