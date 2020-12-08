@@ -93,5 +93,35 @@ namespace TabloidCLI.UserInterfaceManagers
 
             _journalRepository.Insert(entry);
         }
+
+        public Journal Choose(string prompt = null)
+        {
+            if (prompt == null)
+            {
+                prompt = "Please choose a journal entry:";
+            }
+            Console.WriteLine(prompt);
+
+            List<Journal> entries = _journalRepository.GetAll();
+
+            for (int i = 0; i < entries.Count; i++)
+            {
+                Journal entry = entries[i];
+                Console.WriteLine($" {i + 1}) {entry.Title}");
+            }
+            Console.Write("> ");
+
+            string input = Console.ReadLine();
+            try
+            {
+                int choice = int.Parse(input);
+                return entries[choice - 1];
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Invalid Selection");
+                return null;
+            }
+        }
     }
 }
