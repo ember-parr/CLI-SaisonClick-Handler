@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
 using TabloidCLI.Models;
+using TabloidCLI.Repositories;
 
 
 namespace TabloidCLI.Repositories
@@ -127,8 +128,10 @@ namespace TabloidCLI.Repositories
                     cmd.Parameters.AddWithValue("@title", post.Title);
                     cmd.Parameters.AddWithValue("@url", post.Url);
                     cmd.Parameters.AddWithValue("@publish", post.PublishDateTime);
-                    cmd.Parameters.AddWithValue("@authorId", post.Author);
-                    cmd.Parameters.AddWithValue("@blogId", post.Blog);
+                    cmd.Parameters.AddWithValue("@authorId", post.Author.Id);
+                    cmd.Parameters.AddWithValue("@blogId", post.Blog.Id);
+                    //int id = (int)cmd.ExecuteScalar();
+                    //post.Id = id;
 
                     cmd.ExecuteNonQuery();
                 }
