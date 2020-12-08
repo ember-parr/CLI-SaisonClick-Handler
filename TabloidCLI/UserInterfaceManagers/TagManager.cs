@@ -78,7 +78,7 @@ namespace TabloidCLI.UserInterfaceManagers
         }
         private void Edit()
         {
-            Tag tagToEdit = Choose("Which tag would you lie to edit");
+            Tag tagToEdit = Choose("Which tag would you like to edit?");
             if (tagToEdit == null)
             {
                 return;
@@ -115,7 +115,7 @@ namespace TabloidCLI.UserInterfaceManagers
             for (int i = 0; i < tags.Count; i++)
             {
                 Tag tag = tags[i];
-                Console.WriteLine($"{i + 1} {tag.Name}");
+                Console.WriteLine($"{i + 1}) {tag.Name}");
             }
             Console.Write("> ");
             string input = Console.ReadLine();
