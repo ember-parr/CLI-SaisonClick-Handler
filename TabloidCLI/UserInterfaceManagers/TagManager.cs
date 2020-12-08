@@ -1,25 +1,33 @@
 ﻿using System;
+using System.Collections.Generic;
+using TabloidCLI.Models;
 
 namespace TabloidCLI.UserInterfaceManagers
 {
     public class TagManager : IUserInterfaceManager
     {
         private readonly IUserInterfaceManager _parentUI;
-
+        private TagRepository _tagRepository;
+        private string _connectionString;
         public TagManager(IUserInterfaceManager parentUI, string connectionString)
         {
             _parentUI = parentUI;
+            _tagRepository = new TagRepository(connectionString);
+            _connectionString = connectionString;
         }
 
         public IUserInterfaceManager Execute()
         {
-            Console.WriteLine("Tag Menu");
+            Console.WriteLine("------------------------------");
+            Console.WriteLine("|         Tag Menu          |");
+            Console.WriteLine("------------------------------");
             Console.WriteLine(" 1) List Tags");
             Console.WriteLine(" 2) Add Tag");
             Console.WriteLine(" 3) Edit Tag");
             Console.WriteLine(" 4) Remove Tag");
             Console.WriteLine(" 0) Go Back");
-
+            Console.WriteLine("------------------------------");
+            Console.WriteLine();
             Console.Write("> ");
             string choice = Console.ReadLine();
             switch (choice)
@@ -46,15 +54,29 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void List()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("");
+            Console.WriteLine("____________All Tags________________");
+            Console.WriteLine("");
+            List<Tag> tags = _tagRepository.GetAll();
+            foreach (Tag tag in tags)
+            {
+                Console.WriteLine(tag);
+            }
+            Console.WriteLine("------------------------------");
+            Console.WriteLine();
         }
 
         private void Add()
         {
-            throw new NotImplementedException();
-        }
+            Console.WriteLine("New Tag");
+            Tag tag = new Tag();
 
-        private void Edit()
+            Console.Write("Tag Name: ");
+            tag.Name = Console.ReadLine();
+
+            _tagRepository.Insert(tag);
+        }
+            private void Edit()
         {
             throw new NotImplementedException();
         }
