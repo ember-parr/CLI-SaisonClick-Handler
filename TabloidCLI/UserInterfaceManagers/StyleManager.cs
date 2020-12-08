@@ -14,7 +14,7 @@ namespace TabloidCLI.UserInterfaceManagers
             { 2, "Blue"  },
             { 3, "Cyan" },
             { 4, "DarkBlue" },
-            { 5, "DarkCyan" },           
+            { 5, "DarkCyan" },
             { 6, "DarkGray" },
             { 7, "DarkGreen" },
             { 8, "DarkMagenta" },
@@ -26,7 +26,7 @@ namespace TabloidCLI.UserInterfaceManagers
             { 14, "Red" },
             { 15, "White" },
             { 16, "Yellow" },
-        }; 
+        };
 
         public StyleManager(IUserInterfaceManager parentUI)
         {
@@ -34,8 +34,31 @@ namespace TabloidCLI.UserInterfaceManagers
         }
         public IUserInterfaceManager Execute()
         {
+            Console.WriteLine("Pick a new Background Color");
+            foreach (KeyValuePair<int, string> pair in colors)
+            {
+                Console.WriteLine($"{pair.Key}) {pair.Value}");
+            }
+            Console.WriteLine(" 0) Go Back");
+
+            Console.Write("> ");
+            string choice = Console.ReadLine();
+
+            if (choice != "0")
+            {
+                Console.BackgroundColor = ConsoleColor.Blue;
+                return this;
+            }
+            return _parentUI;
 
 
+            //switch (choice)
+            //{
+            //    case "1":
+            //        List();
+            //        return this;
 
+            //}
         }
+    }
 }
