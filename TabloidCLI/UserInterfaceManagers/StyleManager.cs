@@ -10,36 +10,22 @@ namespace TabloidCLI.UserInterfaceManagers
         private readonly IUserInterfaceManager _parentUI;
         private Dictionary<int, string> colors = new Dictionary<int, string>
         {
-            { Black, 1 }
-            { Blue , 2 }
-
-Cyan, 3
-
-DarkBlue, 4
-
-DarkCyan, 5
-
-DarkGray,6
-
-DarkGreen, 7
-
-DarkMagenta, 8
-
-DarkRed, 9
-
-DarkYellow, 10
-
-Gray, 11
-
-Green, 12
-
-Magenta, 13
-
-Red, 12
-
-White, 15
-
-Yellow, 16
+            { 1, "Black" },
+            { 2, "Blue"  },
+            { 3, "Cyan" },
+            { 4, "DarkBlue" },
+            { 5, "DarkCyan" },           
+            { 6, "DarkGray" },
+            { 7, "DarkGreen" },
+            { 8, "DarkMagenta" },
+            { 9, "DarkRed"},
+            { 10, "DarkYellow" },
+            { 11, "Gray"},
+            { 12, "Green" },
+            { 13, "Magenta" },
+            { 14, "Red" },
+            { 15, "White" },
+            { 16, "Yellow" },
         }; 
 
         public StyleManager(IUserInterfaceManager parentUI)
