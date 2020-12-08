@@ -31,6 +31,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine("Post Menu");
             Console.WriteLine(" 1) List Posts");
             Console.WriteLine(" 2) Add Post");
+            Console.WriteLine(" 3) Edit Post");
             Console.WriteLine(" 4) Remove A Post");
             Console.WriteLine(" 0) Go Back");
 
@@ -44,6 +45,9 @@ namespace TabloidCLI.UserInterfaceManagers
                     return this;
                 case "2":
                     Add();
+                    return this;
+                case "3":
+                    Edit();
                     return this;
                 case "4":
                     Remove();
@@ -138,10 +142,62 @@ namespace TabloidCLI.UserInterfaceManagers
             post.Author = chosenAuthor;
             post.PublishDateTime = inputDate;
 
-            
+
 
             _postRepository.Insert(post);
         }
+
+
+        private void Edit()
+        {
+            Post postToEdit = Choose("Which post would you like to edit? ");
+            if (postToEdit == null)
+            {
+                return;
+            }
+
+            Console.WriteLine();
+            Console.Write("New post title (blank to leave unchanged): ");
+            string title = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(title))
+            {
+                postToEdit.Title = title;
+            }
+            Console.Write("New post URL (blank to leave unchanged): ");
+            string url = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(url))
+            {
+                postToEdit.Url = url;
+            }
+            Console.Write("New publish date (input as mm/dd/yyyy or blank to leave unchaged) ");
+            string publish = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(publish))
+            {
+                postToEdit.PublishDateTime = DateTime.Parse(publish);
+            }
+            Console.Write("Would You Like To Change The Posts Author? (y/n) ");
+            string authorQuestion = Console.ReadLine();
+            if (authorQuestion == "y" || authorQuestion == "Y")
+            {
+                Author chosenAuthor = _authorRepo.Choose("Select an author: ");
+                postToEdit.Author = chosenAuthor;
+            }
+
+            Console.Write("Would you like to change the post's blog? (y/n) ");
+            string blogQuestion = Console.ReadLine();
+            if (blogQuestion == "y" || blogQuestion == "Y")
+            {
+                Blog chosenBlog = _blogRepo.Choose("Select a blog: ");
+                postToEdit.Blog = chosenBlog;
+            }
+            Console.WriteLine();
+            Console.WriteLine();
+
+            _postRepository.Update(postToEdit);
+
+        }
+
+
 
         private void Remove()
         {
@@ -151,6 +207,12 @@ namespace TabloidCLI.UserInterfaceManagers
                 _postRepository.Delete(postToDelete.Id);
             }
         }
-
     }
 }
+
+
+
+
+
+
+
