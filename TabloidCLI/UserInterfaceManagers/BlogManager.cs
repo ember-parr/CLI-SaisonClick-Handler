@@ -37,8 +37,8 @@ namespace TabloidCLI.UserInterfaceManagers
                     List();
                     return this;
                 //case "2":
-                //    Blog author = Choose();
-                //    if (author == null)
+                //    Blog blog = Choose();
+                //    if (blog == null)
                 //    {
                 //        return this;
                 //    }
@@ -131,7 +131,7 @@ namespace TabloidCLI.UserInterfaceManagers
             {
                 blogToEdit.Title = title;
             }
-            Console.Write("New url (blank to leave unchanged: ");
+            Console.Write("New url (blank to leave unchanged): ");
             string url = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(url))
             {
