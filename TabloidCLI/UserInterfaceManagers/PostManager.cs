@@ -28,12 +28,16 @@ namespace TabloidCLI.UserInterfaceManagers
 
         public IUserInterfaceManager Execute()
         {
-            Console.WriteLine("Post Menu");
+            Console.WriteLine("------------------------------");
+            Console.WriteLine("|          Post Menu          |");
+            Console.WriteLine("------------------------------");
             Console.WriteLine(" 1) List Posts");
             Console.WriteLine(" 2) Add Post");
             Console.WriteLine(" 3) Edit Post");
             Console.WriteLine(" 4) Remove A Post");
             Console.WriteLine(" 0) Go Back");
+            Console.WriteLine("------------------------------");
+            Console.WriteLine();
 
             Console.Write("> ");
             string choice = Console.ReadLine();
@@ -64,7 +68,7 @@ namespace TabloidCLI.UserInterfaceManagers
         {
             List<Post> posts = _postRepository.GetAll();
             Console.WriteLine("");
-            Console.WriteLine("_____________________________________");
+            Console.WriteLine("______________________________________");
             Console.WriteLine("|___________All Posts________________|");
             Console.WriteLine("");
             foreach (Post post in posts)
@@ -124,14 +128,35 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine("Add Post");
             Post post = new Post();
 
-            Console.Write("Title: ");
-            post.Title = Console.ReadLine();
 
+            while (post.Title == null)
+            {
+                Console.Write("Title: ");
+                string newTitle = Console.ReadLine();
+                if (newTitle.Length > 55)
+                {
+                    Console.WriteLine("ERROR: Title must be less than 55 characters.");
+                    Console.WriteLine();
+                } else
+                {
+                    post.Title = newTitle;
+                }
+            }
 
-            Console.Write("URL: ");
-            post.Url = Console.ReadLine();
-
-            Console.Write("Author: ");
+            while (post.Url == null)
+            {
+                Console.Write("Url: ");
+                string newUrl = Console.ReadLine();
+                if (newUrl.Length > 2000)
+                {
+                    Console.WriteLine("ERROR: URL must be less than 2000 characters.");
+                    Console.WriteLine();
+                }
+                else
+                {
+                    post.Url = newUrl;
+                }
+            }
 
             Author chosenAuthor = _authorRepo.Choose("Select an author: ");
             Blog chosenBlog = _blogRepo.Choose("Select a blog: ");
