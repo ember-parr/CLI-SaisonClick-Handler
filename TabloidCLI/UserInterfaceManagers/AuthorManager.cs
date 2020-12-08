@@ -32,9 +32,11 @@ namespace TabloidCLI.UserInterfaceManagers
             switch (choice)
             {
                 case "1":
+                    Console.Clear();
                     List();
                     return this;
                 case "2":
+                    Console.Clear();
                     Author author = Choose();
                     if (author == null)
                     {
@@ -45,15 +47,19 @@ namespace TabloidCLI.UserInterfaceManagers
                         return new AuthorDetailManager(this, _connectionString, author.Id);
                     }
                 case "3":
+                    Console.Clear();
                     Add();
                     return this;
                 case "4":
+                    Console.Clear();
                     Edit();
                     return this;
                 case "5":
+                    Console.Clear();
                     Remove();
                     return this;
                 case "0":
+                    Console.Clear();
                     return _parentUI;
                 default:
                     Console.WriteLine("Invalid Selection");
