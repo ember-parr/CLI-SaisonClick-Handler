@@ -82,11 +82,11 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void List()
         {
-            List<Journal> journals = _journalRepository.GetAll();
             Console.WriteLine("");
             Console.WriteLine("______________________________________");
-            Console.WriteLine("|_______JOURNAL ENTRY LIST____________|");
+            Console.WriteLine("|_______All Journal Entries___________|");
             Console.WriteLine("");
+            List<Journal> journals = _journalRepository.GetAll();
             foreach (Journal journal in journals)
             {
                 Console.WriteLine(journal.Title);
@@ -108,9 +108,14 @@ namespace TabloidCLI.UserInterfaceManagers
             {
                 Console.Write("Entry Title: ");
                 string entryTitle = Console.ReadLine();
-                if (entryTitle.Length > 55 || entryTitle.Length <= 0)
+                if (entryTitle.Length > 55)
                 {
-                    Console.WriteLine("ERROR: Title must be less than 55 characters and cannot be left blank.");
+                    Console.WriteLine("ERROR: Title must be less than 55 characters.");
+                    Console.WriteLine();
+                }
+                else if (entryTitle.Length <= 0)
+                {
+                    Console.WriteLine("ERROR: Please enter a title.");
                     Console.WriteLine();
                 }
                 else
