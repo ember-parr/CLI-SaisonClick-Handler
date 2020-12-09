@@ -19,7 +19,7 @@ namespace TabloidCLI.UserInterfaceManagers
 
         public IUserInterfaceManager Execute()
         {
-            Console.Clear();
+            //Console.Clear();
             Console.WriteLine("------------------------------");
             Console.WriteLine("|        Author Menu          |");
             Console.WriteLine("------------------------------");
@@ -121,12 +121,43 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine("New Author");
             Author author = new Author();
 
-            Console.Write("First Name: ");
-            author.FirstName = Console.ReadLine();
+            while (author.FirstName == null)
+            {
+                Console.Write("First Name: ");
+                string firstName = Console.ReadLine();
+                if (firstName.Length > 55 || firstName.Length <= 0)
+                {
+                    Console.WriteLine("ERROR: First Name must be filed in & less than 55 characters.");
+                    Console.WriteLine();
+                } else
+                {
+                    author.FirstName = firstName;
+                }
+            }
 
-            Console.Write("Last Name: ");
-            author.LastName = Console.ReadLine();
+            while (author.LastName == null)
+            {
+                Console.Write("Last Name: ");
+                string lastName = Console.ReadLine();
+                if (lastName.Length > 55 || lastName.Length <= 0)
+                {
+                    Console.WriteLine("ERROR: Last Name must be filed in & less than 55 characters.");
+                    Console.WriteLine();
+                }
+                else
+                {
+                    author.LastName = lastName;
+                }
+            }
 
+            //Console.Write("First Name: ");
+            //author.FirstName = Console.ReadLine();
+
+            //Console.Write("Last Name: ");
+            //author.LastName = Console.ReadLine();
+
+
+            // bio does not have a character limit
             Console.Write("Bio: ");
             author.Bio = Console.ReadLine();
 
