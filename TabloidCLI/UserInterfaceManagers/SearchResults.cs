@@ -33,5 +33,7 @@ namespace TabloidCLI.UserInterfaceManagers
 
             Console.WriteLine();
         }
+
+
     }
 }
