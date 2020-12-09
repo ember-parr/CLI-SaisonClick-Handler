@@ -94,6 +94,105 @@ namespace TabloidCLI
             }
         }
 
+        public SearchResults<Blog> SearchBlog(string tagName)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT b.Id, b.Title, b.Url
+                                    FROM Blog b
+                                        LEFT JOIN PostTag pt on b.Id = pt.PostId
+                                        LEFT JOIN Tag t on t.Id = pt.TagId
+                                    WHERE t.Name LIKE @name";
+
+                    cmd.Parameters.AddWithValue("@name", $"%{tagName}%");
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    SearchResults<Blog> results = new SearchResults<Blog>();
+                    while (reader.Read())
+                    {
+                        Blog blog = new Blog()
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            Title = reader.GetString(reader.GetOrdinal("Title")),
+                            Url = reader.GetString(reader.GetOrdinal("Url")),
+                        };
+                        results.Add(blog);
+                       
+                    }
+                    reader.Close();
+
+                    return results;
+                }
+            }
+        
+        }
+
+        public SearchResults<Post> SearchPosts(string tagName)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT p.id,
+                                               p.Title,
+                                               p.Url,
+                                               p.PublishDateTime,
+                                               p.AuthorId,
+                                               p.BlogId,
+                                               a.FirstName,
+                                               a.LastName,
+                                               a.Bio,
+                                               b.Title AS BlogTitle,
+                                               b.URL AS BlogUrl
+                                          FROM Post p 
+                                               LEFT JOIN PostTag pt on p.Id = pt.PostId
+                                               LEFT JOIN Tag t on t.Id = pt.TagId
+                                               LEFT JOIN Author a on p.AuthorId = a.Id
+                                               LEFT JOIN Blog b on p.BlogId = b.Id 
+                                         WHERE t.Name LIKE @name";
+                    cmd.Parameters.AddWithValue("@name", $"%{tagName}%");
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    SearchResults<Post> results = new SearchResults<Post>();
+                    while (reader.Read())
+                    {
+                        Post post = new Post()
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            Title = reader.GetString(reader.GetOrdinal("Title")),
+                            Url = reader.GetString(reader.GetOrdinal("Url")),
+                            PublishDateTime = reader.GetDateTime(reader.GetOrdinal("PublishDateTime")),
+                            Author = new Author()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("AuthorId")),
+                                FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
+                                LastName = reader.GetString(reader.GetOrdinal("LastName")),
+                                Bio = reader.GetString(reader.GetOrdinal("Bio")),
+                            },
+                            Blog = new Blog()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("BlogId")),
+                                Title = reader.GetString(reader.GetOrdinal("BlogTitle")),
+                                Url = reader.GetString(reader.GetOrdinal("BlogUrl")),
+                            }
+                        };
+                        results.Add(post);
+                    }
+
+                    reader.Close();
+
+                    return results;
+                }
+            }
+        }
+
+        //method to search the authors by tagName, returns a SeachResult object containing a list of authors
+        //the type of object in the list changes based on what you declare here, 
+        //so this object ca be used for all the functions 
         public SearchResults<Author> SearchAuthors(string tagName)
         {
             using (SqlConnection conn = Connection)
@@ -101,6 +200,8 @@ namespace TabloidCLI
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
+                    //there's something here i dont understand.  i can't get this sql query to work outside this method
+                    //need to find out why, maybe it has something to do with the $"%{______}%" on line 214?
                     cmd.CommandText = @"SELECT a.id,
                                                a.FirstName,
                                                a.LastName,
@@ -109,9 +210,10 @@ namespace TabloidCLI
                                                LEFT JOIN AuthorTag at on a.Id = at.AuthorId
                                                LEFT JOIN Tag t on t.Id = at.TagId
                                          WHERE t.Name LIKE @name";
+                    //the % lets you search by only one character and return results that include that character
                     cmd.Parameters.AddWithValue("@name", $"%{tagName}%");
                     SqlDataReader reader = cmd.ExecuteReader();
-
+                    //building our author objects that got in the searchResult's list
                     SearchResults<Author> results = new SearchResults<Author>();
                     while (reader.Read())
                     {

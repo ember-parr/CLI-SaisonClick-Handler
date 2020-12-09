@@ -28,10 +28,13 @@ namespace TabloidCLI.UserInterfaceManagers
 
             foreach (T result in _results)
             {
+                // each model needs to contain a tostring override method or else this just returns the model
                 Console.WriteLine(" " + result);
             }
 
             Console.WriteLine();
         }
+
+
     }
 }
