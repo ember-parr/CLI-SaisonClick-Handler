@@ -19,7 +19,10 @@ namespace TabloidCLI.UserInterfaceManagers
 
         public IUserInterfaceManager Execute()
         {
-            Console.WriteLine("Author Menu");
+            Console.Clear();
+            Console.WriteLine("------------------------------");
+            Console.WriteLine("|        Author Menu          |");
+            Console.WriteLine("------------------------------");
             Console.WriteLine(" 1) List Authors");
             Console.WriteLine(" 2) Author Details");
             Console.WriteLine(" 3) Add Author");
@@ -32,9 +35,13 @@ namespace TabloidCLI.UserInterfaceManagers
             switch (choice)
             {
                 case "1":
+                    Console.Clear();
                     List();
+                    Console.Write("Press any key to go back to Post Menu");
+                    Console.ReadKey();
                     return this;
                 case "2":
+                    Console.Clear();
                     Author author = Choose();
                     if (author == null)
                     {
@@ -45,15 +52,19 @@ namespace TabloidCLI.UserInterfaceManagers
                         return new AuthorDetailManager(this, _connectionString, author.Id);
                     }
                 case "3":
+                    Console.Clear();
                     Add();
                     return this;
                 case "4":
+                    Console.Clear();
                     Edit();
                     return this;
                 case "5":
+                    Console.Clear();
                     Remove();
                     return this;
                 case "0":
+                    Console.Clear();
                     return _parentUI;
                 default:
                     Console.WriteLine("Invalid Selection");
@@ -64,7 +75,7 @@ namespace TabloidCLI.UserInterfaceManagers
         private void List()
         {
             Console.WriteLine("");
-            Console.WriteLine("_____________________________________");
+            Console.WriteLine("________________________________________");
             Console.WriteLine("|___________All Authors________________|");
             Console.WriteLine("");
             List<Author> authors = _authorRepository.GetAll();
@@ -112,12 +123,43 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine("New Author");
             Author author = new Author();
 
-            Console.Write("First Name: ");
-            author.FirstName = Console.ReadLine();
+            while (author.FirstName == null)
+            {
+                Console.Write("First Name: ");
+                string firstName = Console.ReadLine();
+                if (firstName.Length > 55 || firstName.Length <= 0)
+                {
+                    Console.WriteLine("ERROR: First Name must be filed in & less than 55 characters.");
+                    Console.WriteLine();
+                } else
+                {
+                    author.FirstName = firstName;
+                }
+            }
 
-            Console.Write("Last Name: ");
-            author.LastName = Console.ReadLine();
+            while (author.LastName == null)
+            {
+                Console.Write("Last Name: ");
+                string lastName = Console.ReadLine();
+                if (lastName.Length > 55 || lastName.Length <= 0)
+                {
+                    Console.WriteLine("ERROR: Last Name must be filed in & less than 55 characters.");
+                    Console.WriteLine();
+                }
+                else
+                {
+                    author.LastName = lastName;
+                }
+            }
 
+            //Console.Write("First Name: ");
+            //author.FirstName = Console.ReadLine();
+
+            //Console.Write("Last Name: ");
+            //author.LastName = Console.ReadLine();
+
+
+            // bio does not have a character limit
             Console.Write("Bio: ");
             author.Bio = Console.ReadLine();
 
@@ -133,19 +175,19 @@ namespace TabloidCLI.UserInterfaceManagers
             }
 
             Console.WriteLine();
-            Console.Write("New first name (blank to leave unchanged: ");
+            Console.Write("New first name (blank to leave unchanged): ");
             string firstName = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(firstName))
             {
                 authorToEdit.FirstName = firstName;
             }
-            Console.Write("New last name (blank to leave unchanged: ");
+            Console.Write("New last name (blank to leave unchanged): ");
             string lastName = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(lastName))
             {
                 authorToEdit.LastName = lastName;
             }
-            Console.Write("New bio (blank to leave unchanged: ");
+            Console.Write("New bio (blank to leave unchanged): ");
             string bio = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(bio))
             {

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using TabloidCLI.Models;
 using TabloidCLI.Repositories;
+using System.Timers;
+using System.Threading;
 
 namespace TabloidCLI.UserInterfaceManagers
 {
@@ -21,19 +23,22 @@ namespace TabloidCLI.UserInterfaceManagers
             _blogRepo = new BlogManager(parentUI, connectionString);
             _parentUI = parentUI;
             _postRepository = new PostRepository(connectionString);
-            //_authorRepo = new AuthorRepository(connectionString);
             _connectionString = connectionString;
         }
-        //AuthorManager authorManage = new AuthorManager(this, _connectionString);
 
         public IUserInterfaceManager Execute()
         {
-            Console.WriteLine("Post Menu");
+            Console.Clear();
+            Console.WriteLine("------------------------------");
+            Console.WriteLine("|          Post Menu          |");
+            Console.WriteLine("------------------------------");
             Console.WriteLine(" 1) List Posts");
             Console.WriteLine(" 2) Add Post");
             Console.WriteLine(" 3) Edit Post");
             Console.WriteLine(" 4) Remove A Post");
             Console.WriteLine(" 0) Go Back");
+            Console.WriteLine("------------------------------");
+            Console.WriteLine();
 
             Console.Write("> ");
             string choice = Console.ReadLine();
@@ -41,18 +46,25 @@ namespace TabloidCLI.UserInterfaceManagers
             switch (choice)
             {
                 case "1":
+                    Console.Clear();
                     List();
+                    Console.Write("Press any key to go back to Post Menu");
+                    Console.ReadKey();
                     return this;
                 case "2":
+                    Console.Clear();
                     Add();
                     return this;
                 case "3":
+                    Console.Clear();
                     Edit();
                     return this;
                 case "4":
+                    Console.Clear();
                     Remove();
                     return this;
                 case "0":
+                    Console.Clear();
                     return _parentUI;
                 default:
                     Console.WriteLine("Invlid Selection");
@@ -64,7 +76,7 @@ namespace TabloidCLI.UserInterfaceManagers
         {
             List<Post> posts = _postRepository.GetAll();
             Console.WriteLine("");
-            Console.WriteLine("_____________________________________");
+            Console.WriteLine("______________________________________");
             Console.WriteLine("|___________All Posts________________|");
             Console.WriteLine("");
             foreach (Post post in posts)
@@ -124,14 +136,35 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine("Add Post");
             Post post = new Post();
 
-            Console.Write("Title: ");
-            post.Title = Console.ReadLine();
 
+            while (post.Title == null)
+            {
+                Console.Write("Title: ");
+                string newTitle = Console.ReadLine();
+                if (newTitle.Length > 55 || newTitle.Length <= 0)
+                {
+                    Console.WriteLine("ERROR: Title must be less than 55 characters.");
+                    Console.WriteLine();
+                } else
+                {
+                    post.Title = newTitle;
+                }
+            }
 
-            Console.Write("URL: ");
-            post.Url = Console.ReadLine();
-
-            Console.Write("Author: ");
+            while (post.Url == null)
+            {
+                Console.Write("Url: ");
+                string newUrl = Console.ReadLine();
+                if (newUrl.Length > 2000 || newUrl.Length <= 0)
+                {
+                    Console.WriteLine("ERROR: URL must be filled in & less than 2000 characters.");
+                    Console.WriteLine();
+                }
+                else
+                {
+                    post.Url = newUrl;
+                }
+            }
 
             Author chosenAuthor = _authorRepo.Choose("Select an author: ");
             Blog chosenBlog = _blogRepo.Choose("Select a blog: ");
