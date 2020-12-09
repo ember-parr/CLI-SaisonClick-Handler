@@ -52,7 +52,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.Write("Tag> ");
             string tagName = Console.ReadLine();
 
-            //searches authors through the tagrepo class's search method and returns a searchResult object, which includes a list of Author objects 
+            //searches authors through the tagRepo class's search method and returns a searchResult object, which includes a list of Author objects 
             SearchResults<Author> results = _tagRepository.SearchAuthors(tagName);
 
             //search results obj's have a prop, .NoResultsFound, that returns true when their are no results found in the search
@@ -102,6 +102,8 @@ namespace TabloidCLI.UserInterfaceManagers
             }
 
         }
+
+        //runs 3 search methods and get 3 types of SearchResults objects
         private void SearchAll()
         {
             Console.Write("Tag> ");
