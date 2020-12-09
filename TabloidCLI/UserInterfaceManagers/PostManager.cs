@@ -23,10 +23,8 @@ namespace TabloidCLI.UserInterfaceManagers
             _blogRepo = new BlogManager(parentUI, connectionString);
             _parentUI = parentUI;
             _postRepository = new PostRepository(connectionString);
-            //_authorRepo = new AuthorRepository(connectionString);
             _connectionString = connectionString;
         }
-        //AuthorManager authorManage = new AuthorManager(this, _connectionString);
 
         public IUserInterfaceManager Execute()
         {

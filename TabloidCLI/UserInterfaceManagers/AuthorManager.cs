@@ -19,7 +19,7 @@ namespace TabloidCLI.UserInterfaceManagers
 
         public IUserInterfaceManager Execute()
         {
-            //Console.Clear();
+            Console.Clear();
             Console.WriteLine("------------------------------");
             Console.WriteLine("|        Author Menu          |");
             Console.WriteLine("------------------------------");
@@ -37,6 +37,8 @@ namespace TabloidCLI.UserInterfaceManagers
                 case "1":
                     Console.Clear();
                     List();
+                    Console.Write("Press any key to go back to Post Menu");
+                    Console.ReadKey();
                     return this;
                 case "2":
                     Console.Clear();
@@ -173,19 +175,19 @@ namespace TabloidCLI.UserInterfaceManagers
             }
 
             Console.WriteLine();
-            Console.Write("New first name (blank to leave unchanged: ");
+            Console.Write("New first name (blank to leave unchanged): ");
             string firstName = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(firstName))
             {
                 authorToEdit.FirstName = firstName;
             }
-            Console.Write("New last name (blank to leave unchanged: ");
+            Console.Write("New last name (blank to leave unchanged): ");
             string lastName = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(lastName))
             {
                 authorToEdit.LastName = lastName;
             }
-            Console.Write("New bio (blank to leave unchanged: ");
+            Console.Write("New bio (blank to leave unchanged): ");
             string bio = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(bio))
             {
