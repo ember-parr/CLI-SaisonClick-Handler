@@ -94,40 +94,37 @@ namespace TabloidCLI
             }
         }
 
-        public List<Tag> GetByBlog(int blogId)
-        {
-            using (SqlConnection conn = Connection)
-            {
-                conn.Open();
-                using (SqlCommand cmd = conn.CreateCommand())
-                {
-                    cmd.CommandText = @"SELECT bt.Id AS blogTagId, bt.BlogId, bt.TagId, t.Name
-                                        FROM BlogTag bt
-                                        JOIN Tag t ON bt.TagId = t.Id
-                                        WHERE BlogId = @id";
+        //public List<Tag> GetPostsByBlog(int blogId)
+        //{
+        //    using (SqlConnection conn = Connection)
+        //    {
+        //        conn.Open();
+        //        using (SqlCommand cmd = conn.CreateCommand())
+        //        {
+        //            cmd.CommandText = "SELECT p.id, p.Title As PostTitle, p.URL AS PostUrl, p.PublishDateTime, p.AuthorId, p.BlogId, FROM Posts p JOIN Blog b ON p.BlogId = b.Id WHERE p.BlogId = @BlogId";
 
-                    cmd.Parameters.AddWithValue("@id", blogId);
+        //            cmd.Parameters.AddWithValue("@BlogId", blogId);
 
 
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    List<Tag> tags = new List<Tag>();
+        //            SqlDataReader reader = cmd.ExecuteReader();
+        //            List<Tag> tags = new List<Tag>();
 
-                    while (reader.Read())
-                    {
-                        Tag tag = new Tag()
-                        {
-                            Id = reader.GetInt32(reader.GetOrdinal("blogTagId")),
-                            Name = reader.GetString(reader.GetOrdinal("Name")),
-                        };
-                        tags.Add(tag);
-                    }
+        //            while (reader.Read())
+        //            {
+        //                Tag tag = new Tag()
+        //                {
+        //                    Id = reader.GetInt32(reader.GetOrdinal("blogTagId")),
+        //                    Name = reader.GetString(reader.GetOrdinal("Name")),
+        //                };
+        //                tags.Add(tag);
+        //            }
 
-                    reader.Close();
+        //            reader.Close();
 
-                    return tags;
-                }
-            }
-        }
+        //            return tags;
+        //        }
+        //    }
+        //}
         public void Update(Blog blog)
         {
             using (SqlConnection conn = Connection)
