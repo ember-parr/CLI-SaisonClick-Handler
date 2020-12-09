@@ -50,7 +50,7 @@ namespace TabloidCLI.UserInterfaceManagers
                     RemoveTag();
                     return this;
                 case "4":
-                    //ViewPosts();
+                    ViewPosts();
                     return this;
                 case "0":
                     return _parentUI;
@@ -131,14 +131,14 @@ namespace TabloidCLI.UserInterfaceManagers
                 Console.WriteLine("Invalid Selection. Won't remove any tags.");
             }
         }
-        //private void ViewPosts()
-        //{
-        //    List<Post> posts = _postRepository.GetPostsByBlog(_blogId);
-        //    foreach (Post post in posts)
-        //    {
-        //        Console.WriteLine(post.Title);
-        //    }
-        //    Console.WriteLine();
-        //}
+        private void ViewPosts()
+        {
+            List<Post> posts = _postRepository.GetPostsByBlog(_blogId);
+            foreach (Post post in posts)
+            {
+                Console.WriteLine(post.Title);
+            }
+            Console.WriteLine();
+        }
     }
 }
