@@ -19,7 +19,10 @@ namespace TabloidCLI.UserInterfaceManagers
 
         public IUserInterfaceManager Execute()
         {
-            Console.WriteLine("Author Menu");
+            Console.Clear();
+            Console.WriteLine("------------------------------");
+            Console.WriteLine("|        Author Menu          |");
+            Console.WriteLine("------------------------------");
             Console.WriteLine(" 1) List Authors");
             Console.WriteLine(" 2) Author Details");
             Console.WriteLine(" 3) Add Author");
@@ -70,7 +73,7 @@ namespace TabloidCLI.UserInterfaceManagers
         private void List()
         {
             Console.WriteLine("");
-            Console.WriteLine("_____________________________________");
+            Console.WriteLine("________________________________________");
             Console.WriteLine("|___________All Authors________________|");
             Console.WriteLine("");
             List<Author> authors = _authorRepository.GetAll();
