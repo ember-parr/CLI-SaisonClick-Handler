@@ -26,10 +26,9 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine("|        Journal Menu        |");
             Console.WriteLine("------------------------------");
             Console.WriteLine(" 1) List Entries");
-            Console.WriteLine(" 2) Entry Details");
-            Console.WriteLine(" 3) Add Entry");
-            Console.WriteLine(" 4) Edit Entry");
-            Console.WriteLine(" 5) Remove Entry");
+            Console.WriteLine(" 2) Add Entry");
+            Console.WriteLine(" 3) Edit Entry");
+            Console.WriteLine(" 4) Remove Entry");
             Console.WriteLine(" 0) Go Back");
             Console.WriteLine("------------------------------");
             Console.WriteLine();
@@ -45,28 +44,14 @@ namespace TabloidCLI.UserInterfaceManagers
                     Console.ReadKey();
                     return this;
                 case "2":
-                    Console.Clear();
-                    List();
-                    return this;
-                //case "2":
-                //    Journal journal = Choose();
-                //    if (journal == null)
-                //    {
-                //        return this;
-                //    }
-                //    else
-                //    {
-                //        return new JournalDetailManager(this, _connectionString, journal.Id);
-                //    }
-                case "3":
-                    Console.Clear();
                     Add();
+                    Console.Clear();
                     return this;
-                case "4":
+                case "3":
                     Console.Clear();
                     Edit();
                     return this;
-                case "5":
+                case "4":
                     Console.Clear();
                     Remove();
                     return this;

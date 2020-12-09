@@ -62,13 +62,9 @@ namespace TabloidCLI.UserInterfaceManagers
                     return this;
                 case "4":
                     Console.Clear();
-                    Add();
-                    return this;
-                case "5":
-                    Console.Clear();
                     Edit();
                     return this;
-                case "6":
+                case "5":
                     Console.Clear();
                     Remove();
                     return this;
