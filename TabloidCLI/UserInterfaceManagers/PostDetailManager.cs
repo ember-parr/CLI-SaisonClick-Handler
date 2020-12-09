@@ -32,7 +32,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine(" 1) View");
             Console.WriteLine(" 2) Add Tag");
             Console.WriteLine(" 3) Remove Tag");
-            Console.WriteLine(" 4) Note Management");
+            //Console.WriteLine(" 4) Note Management");
             Console.WriteLine(" 0) Go Back");
             Console.WriteLine("------------------------------");
             Console.WriteLine();
