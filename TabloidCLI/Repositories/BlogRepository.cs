@@ -93,7 +93,42 @@ namespace TabloidCLI
                 }
             }
         }
-            public void Update(Blog blog)
+
+        public List<Tag> GetByBlog(int blogId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT bt.Id AS blogTagId, bt.BlogId, bt.TagId, t.Name
+                                        FROM BlogTag bt
+                                        JOIN Tag t ON bt.TagId = t.Id
+                                        WHERE BlogId = @id";
+
+                    cmd.Parameters.AddWithValue("@id", blogId);
+
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    List<Tag> tags = new List<Tag>();
+
+                    while (reader.Read())
+                    {
+                        Tag tag = new Tag()
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("blogTagId")),
+                            Name = reader.GetString(reader.GetOrdinal("Name")),
+                        };
+                        tags.Add(tag);
+                    }
+
+                    reader.Close();
+
+                    return tags;
+                }
+            }
+        }
+        public void Update(Blog blog)
         {
             using (SqlConnection conn = Connection)
             {
