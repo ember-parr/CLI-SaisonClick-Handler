@@ -50,13 +50,13 @@ namespace TabloidCLI.UserInterfaceManagers
                     Console.Clear();
                     AddTag();
                     return this;
-                //case "3":
-                //    Console.Clear();
-                //    Edit();
-                //    return this;
+                case "3":
+                    Console.Clear();
+                    RemoveTag();
+                    return this;
                 //case "4":
                 //    Console.Clear();
-                //    RemoveTag();
+                //    Edit();
                 //    return this;
                 case "0":
                     Console.Clear();
@@ -73,15 +73,15 @@ namespace TabloidCLI.UserInterfaceManagers
             Post post = _postRepository.Get(_postId);
             List<Tag> tags = _postRepository.GetTagsByPost(_postId);
             Console.WriteLine("------------------------------");
-            Console.WriteLine($"{post.Title} Details          ");
+            Console.WriteLine($"'{post.Title}' Details          ");
             Console.WriteLine("------------------------------");
             Console.WriteLine($"Author: {post.Author.FirstName} {post.Author.LastName}");
             Console.WriteLine($"Blog: {post.Blog.Title}");
             Console.WriteLine($"Published: {post.PublishDateTime}");
-            Console.WriteLine("Tags comming in V2:");
+            Console.WriteLine("Tags:");
             foreach (Tag tag in tags)
             {
-                Console.Write("  " + tag.Name);
+                Console.Write("  -" + tag.Name);
             }
 
 
@@ -117,6 +117,32 @@ namespace TabloidCLI.UserInterfaceManagers
             catch (Exception ex)
             {
                 Console.WriteLine("Invalid Selection, no tags added");
+            }
+        }
+
+
+        private void RemoveTag()
+        {
+            Post post = _postRepository.Get(_postId);
+            Console.WriteLine($"Which tag would you liek to remove from {post.Title}?");
+            List<Tag> tags = _postRepository.GetTagsByPost(_postId);
+            for (int i = 0; i < tags.Count; i++)
+            {
+                Tag tag = tags[i];
+                Console.WriteLine($" {i + 1}) {tag.Name}");
+            }
+            Console.Write("> ");
+
+            string input = Console.ReadLine();
+            try
+            {
+                int choice = int.Parse(input);
+                Tag tag = tags[choice - 1];
+                _postRepository.DeleteTag(post.Id, tag.Id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Invalid Selection. Won't remove any tags.");
             }
         }
 
