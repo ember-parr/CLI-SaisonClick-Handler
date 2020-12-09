@@ -141,7 +141,7 @@ namespace TabloidCLI.UserInterfaceManagers
             {
                 Console.Write("Title: ");
                 string newTitle = Console.ReadLine();
-                if (newTitle.Length > 55)
+                if (newTitle.Length > 55 || newTitle.Length <= 0)
                 {
                     Console.WriteLine("ERROR: Title must be less than 55 characters.");
                     Console.WriteLine();
@@ -155,9 +155,9 @@ namespace TabloidCLI.UserInterfaceManagers
             {
                 Console.Write("Url: ");
                 string newUrl = Console.ReadLine();
-                if (newUrl.Length > 2000)
+                if (newUrl.Length > 2000 || newUrl.Length <= 0)
                 {
-                    Console.WriteLine("ERROR: URL must be less than 2000 characters.");
+                    Console.WriteLine("ERROR: URL must be filled in & less than 2000 characters.");
                     Console.WriteLine();
                 }
                 else
