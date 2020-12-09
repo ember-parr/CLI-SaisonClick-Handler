@@ -21,6 +21,7 @@ namespace TabloidCLI.UserInterfaceManagers
 
         public IUserInterfaceManager Execute()
         {
+            Console.Clear();
             Console.WriteLine("------------------------------");
             Console.WriteLine("|         Blog Menu          |");
             Console.WriteLine("------------------------------");
@@ -38,6 +39,13 @@ namespace TabloidCLI.UserInterfaceManagers
             switch (choice)
             {
                 case "1":
+                    Console.Clear();
+                    List();
+                    Console.Write("Press any key to go back to Blog Menu");
+                    Console.ReadKey();
+                    return this;
+                case "2":
+                    Console.Clear();
                     List();
                     return this;
                 //case "2":
@@ -51,15 +59,19 @@ namespace TabloidCLI.UserInterfaceManagers
                 //        return new BlogDetailManager(this, _connectionString, author.Id);
                 //    }
                 case "3":
+                    Console.Clear();
                     Add();
                     return this;
                 case "4":
+                    Console.Clear();
                     Edit();
                     return this;
                 case "5":
+                    Console.Clear();
                     Remove();
                     return this;
                 case "0":
+                    Console.Clear();
                     return _parentUI;
                 default:
                     Console.WriteLine("Invalid Selection");
@@ -80,6 +92,8 @@ namespace TabloidCLI.UserInterfaceManagers
             }
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine();
+            Console.WriteLine();
+
         }
         public Blog Choose(string prompt = null)
         {
@@ -117,11 +131,44 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine("New Blog");
             Blog blog = new Blog();
 
-            Console.Write("Title: ");
-            blog.Title = Console.ReadLine();
-
-            Console.Write("URL: ");
-            blog.Url = Console.ReadLine();
+            while (blog.Title == null)
+            {
+                Console.Write("Title: ");
+                string blogTitle = Console.ReadLine();
+                if (blogTitle.Length > 55)
+                {
+                    Console.WriteLine("ERROR: Title must be less than 55 characters.");
+                    Console.WriteLine();
+                }
+                else if (blogTitle.Length <= 0)
+                {
+                    Console.WriteLine("ERROR: Please enter a title.");
+                    Console.WriteLine();
+                }
+                else
+                {
+                    blog.Title = blogTitle;
+                }
+            }
+            while (blog.Url == null)
+            {
+                Console.Write("URL: ");
+                string blogUrl = Console.ReadLine();
+                if (blogUrl.Length > 2000)
+                {
+                    Console.WriteLine("ERROR: Seriously why is this URL so long? This is no place to tell a story. Simply include a standard URL.");
+                    Console.WriteLine();
+                }
+                else if (blogUrl.Length <= 0)
+                {
+                    Console.WriteLine("ERROR: Please enter a valid URL.");
+                    Console.WriteLine();
+                }
+                else
+                {
+                    blog.Url = blogUrl;
+                }
+            }
 
             _blogRepository.Insert(blog);
         }
