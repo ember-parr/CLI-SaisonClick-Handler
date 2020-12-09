@@ -51,7 +51,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.Write("Tag> ");
             string tagName = Console.ReadLine();
 
-            //searches authors through the tag repo class's method and returns a search 
+            //searches authors through the tagrepo class's search method and returns a searchResult object, which includes a list of Author objects 
             SearchResults<Author> results = _tagRepository.SearchAuthors(tagName);
 
             //search results obj's have a prop, .NoResultsFound, that returns true when their are no results found in the search
@@ -59,6 +59,7 @@ namespace TabloidCLI.UserInterfaceManagers
             {
                 Console.WriteLine($"No results for {tagName}");
             }
+            //if there was a result use the display method of the search results object
             else
             {
                 results.Display();
