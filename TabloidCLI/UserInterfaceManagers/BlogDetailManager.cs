@@ -13,10 +13,9 @@ namespace TabloidCLI.UserInterfaceManagers
         private PostRepository _postRepository;
         private TagRepository _tagRepository;
         private int _blogId;
-        private int _authorId;
 
 
-        public BlogDetailManager(IUserInterfaceManager parentUI, string connectionString, int blogId)
+        public BlogDetailManager(IUserInterfaceManager parentUI, string connectionString, int blogId, int authorId)
         {
             _parentUI = parentUI;
             _blogRepository = new BlogRepository(connectionString);
@@ -24,6 +23,7 @@ namespace TabloidCLI.UserInterfaceManagers
             _postRepository = new PostRepository(connectionString);
             _tagRepository = new TagRepository(connectionString);
             _blogId = blogId;
+
 
         }
         public IUserInterfaceManager Execute()
@@ -64,10 +64,15 @@ namespace TabloidCLI.UserInterfaceManagers
             Blog blog = _blogRepository.Get(_blogId);
             Console.WriteLine($"Title: {blog.Title}");
             Console.WriteLine($"URL: {blog.Url}");
+            //foreach (Post post in blog.Post.Title)
+            //{
+            //    Console.WriteLine($"{blog.Post.Title}");
+            //}
+            Console.WriteLine();
             Console.WriteLine("Tags:");
             foreach (Tag tag in blog.Tags)
             {
-                Console.WriteLine(" " + tag);
+                Console.WriteLine(" " + tag.Name);
             }
             Console.WriteLine();
         }
@@ -119,7 +124,7 @@ namespace TabloidCLI.UserInterfaceManagers
             {
                 int choice = int.Parse(input);
                 Tag tag = tags[choice - 1];
-                _blogRepository.DeleteTag(blog.Id, tag.Id);
+                //_blogRepository.DeleteTag(blog.Id, tag.Id);
             }
             catch (Exception ex)
             {
@@ -128,7 +133,7 @@ namespace TabloidCLI.UserInterfaceManagers
         }
         private void ViewPosts()
         {
-            List<Post> posts = _postRepository.GetByAuthor(_authorId);
+            List<Post> posts = _postRepository.GetByBlog(_blogId);
             foreach (Post post in posts)
             {
                 Console.WriteLine(post.Title);

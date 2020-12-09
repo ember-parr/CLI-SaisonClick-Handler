@@ -50,6 +50,7 @@ namespace TabloidCLI.UserInterfaceManagers
                     List();
                     return this;
                 case "3":
+                    Console.Clear();
                     Blog blog = Choose();
                     if (blog == null)
                     {
