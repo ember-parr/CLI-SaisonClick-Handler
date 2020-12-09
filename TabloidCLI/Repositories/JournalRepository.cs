@@ -41,10 +41,7 @@ namespace TabloidCLI.Repositories
                 }
             }
         }
-        //public Journal Get(int id)
-        //{
-        //    throw new NotImplementedException();
-        //}
+    
 
 
         public void Insert(Journal entry)

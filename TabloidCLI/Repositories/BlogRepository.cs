@@ -5,9 +5,9 @@ using System.Text;
 using TabloidCLI.Models;
 using TabloidCLI.Repositories;
 
-namespace TabloidCLI.Repositories
+namespace TabloidCLI
 {
-    class BlogRepository : DatabaseConnector
+    class BlogRepository : DatabaseConnector, IRepository<Blog>
     {
         public BlogRepository(string connectionString) : base(connectionString) { }
 
@@ -43,7 +43,57 @@ namespace TabloidCLI.Repositories
                 }
             }
         }
-        public void Update(Blog blog)
+
+        public Blog Get(int id)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT b.Id AS BlogId,
+                                               b.Title,
+                                               b.Url,
+                                               t.Id AS TagId
+                                          FROM Blog b 
+                                               LEFT JOIN AuthorTag at on b.Id = at.AuthorId
+                                               LEFT JOIN Tag t on t.Id = at.TagId
+                                         WHERE b.id = @id";
+
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    Blog blog = null;
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        if (blog == null)
+                        {
+                            blog = new Blog()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("BlogId")),
+                                Title = reader.GetString(reader.GetOrdinal("Title")),
+                                Url = reader.GetString(reader.GetOrdinal("Url")),
+                            };
+                        }
+
+                        if (!reader.IsDBNull(reader.GetOrdinal("TagId")))
+                        {
+                            blog.Tags.Add(new Tag()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("TagId")),
+                                Name = reader.GetString(reader.GetOrdinal("Name")),
+                            });
+                        }
+                    }
+
+                    reader.Close();
+
+                    return blog;
+                }
+            }
+        }
+            public void Update(Blog blog)
         {
             using (SqlConnection conn = Connection)
             {
