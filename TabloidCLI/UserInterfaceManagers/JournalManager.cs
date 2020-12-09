@@ -21,19 +21,31 @@ namespace TabloidCLI.UserInterfaceManagers
 
         public IUserInterfaceManager Execute()
         {
-            Console.WriteLine("Journal Menu");
+            Console.Clear();
+            Console.WriteLine("------------------------------");
+            Console.WriteLine("|        Journal Menu        |");
+            Console.WriteLine("------------------------------");
             Console.WriteLine(" 1) List Entries");
             Console.WriteLine(" 2) Entry Details");
             Console.WriteLine(" 3) Add Entry");
             Console.WriteLine(" 4) Edit Entry");
             Console.WriteLine(" 5) Remove Entry");
             Console.WriteLine(" 0) Go Back");
+            Console.WriteLine("------------------------------");
+            Console.WriteLine();
 
             Console.Write("> ");
             string choice = Console.ReadLine();
             switch (choice)
             {
                 case "1":
+                    Console.Clear();
+                    List();
+                    Console.Write("Press any key to go back to Journal Menu");
+                    Console.ReadKey();
+                    return this;
+                case "2":
+                    Console.Clear();
                     List();
                     return this;
                 //case "2":
@@ -47,15 +59,19 @@ namespace TabloidCLI.UserInterfaceManagers
                 //        return new JournalDetailManager(this, _connectionString, journal.Id);
                 //    }
                 case "3":
+                    Console.Clear();
                     Add();
                     return this;
                 case "4":
+                    Console.Clear();
                     Edit();
                     return this;
                 case "5":
+                    Console.Clear();
                     Remove();
                     return this;
                 case "0":
+                    Console.Clear();
                     return _parentUI;
                 default:
                     Console.WriteLine("Invalid Selection");
@@ -66,26 +82,42 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void List()
         {
-            Console.WriteLine("_______JOURNAL ENTRY LIST_______");
             List<Journal> journals = _journalRepository.GetAll();
+            Console.WriteLine("");
+            Console.WriteLine("______________________________________");
+            Console.WriteLine("|_______JOURNAL ENTRY LIST____________|");
+            Console.WriteLine("");
             foreach (Journal journal in journals)
             {
-                Console.WriteLine("");
                 Console.WriteLine(journal.Title);
                 Console.WriteLine(journal.CreateDateTime);
                 Console.WriteLine(journal.Content);
-                Console.WriteLine("");
                 Console.WriteLine("---------------------------------");
 
             }
+            Console.WriteLine();
+            Console.WriteLine();
         }
         private void Add()
         {
             Console.WriteLine("New Entry");
             Journal entry = new Journal();
 
-            Console.Write("Entry Title: ");
-            entry.Title = Console.ReadLine();
+
+            while (entry.Title == null)
+            {
+                Console.Write("Entry Title: ");
+                string entryTitle = Console.ReadLine();
+                if (entryTitle.Length > 55 || entryTitle.Length <= 0)
+                {
+                    Console.WriteLine("ERROR: Title must be less than 55 characters and cannot be left blank.");
+                    Console.WriteLine();
+                }
+                else
+                {
+                    entry.Title = entryTitle;
+                }
+            }
 
             Console.Write("Create your entry here: ");
             entry.Content = Console.ReadLine();
