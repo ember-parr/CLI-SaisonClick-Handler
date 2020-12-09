@@ -56,6 +56,7 @@ namespace TabloidCLI.Repositories
             }
         }
 
+
         public Post Get(int id)
         {
             using (SqlConnection conn = Connection)
@@ -129,6 +130,41 @@ namespace TabloidCLI.Repositories
                     reader.Close();
 
                     return post;
+                }
+            }
+        }
+
+        public List<Tag> GetTagsByPost(int postId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT pt.Id AS postTagId, pt.PostId, pt.TagId, t.Name
+                                        FROM PostTag pt
+                                        JOIN Tag t ON pt.TagId = t.Id
+                                        WHERE PostId = @id";
+
+                    cmd.Parameters.AddWithValue("@id", postId);
+
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    List<Tag> tags = new List<Tag>();
+
+                    while (reader.Read())
+                    {
+                        Tag tag = new Tag()
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("postTagId")),
+                            Name = reader.GetString(reader.GetOrdinal("Name")),
+                        };
+                        tags.Add(tag);   
+                    }
+
+                    reader.Close();
+
+                    return tags;
                 }
             }
         }

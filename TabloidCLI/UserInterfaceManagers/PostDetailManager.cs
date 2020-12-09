@@ -71,6 +71,7 @@ namespace TabloidCLI.UserInterfaceManagers
         private void View()
         {
             Post post = _postRepository.Get(_postId);
+            List<Tag> tags = _postRepository.GetTagsByPost(_postId);
             Console.WriteLine("------------------------------");
             Console.WriteLine($"{post.Title} Details          ");
             Console.WriteLine("------------------------------");
@@ -78,9 +79,13 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine($"Blog: {post.Blog.Title}");
             Console.WriteLine($"Published: {post.PublishDateTime}");
             Console.WriteLine("Tags comming in V2:");
-            
+            foreach (Tag tag in tags)
+            {
+                Console.Write("  " + tag.Name);
+            }
 
 
+            Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("Press any key to go back to Post Menu");
             Console.ReadKey();
