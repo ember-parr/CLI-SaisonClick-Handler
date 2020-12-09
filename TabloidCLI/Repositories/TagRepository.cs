@@ -190,7 +190,9 @@ namespace TabloidCLI
             }
         }
 
-
+        //method to search the authors by tagName, returns a SeachResult object containing a list of authors
+        //the type of object in the list changes based on what you declare here, 
+        //so this object ca be used for all the functions 
         public SearchResults<Author> SearchAuthors(string tagName)
         {
             using (SqlConnection conn = Connection)
@@ -198,6 +200,8 @@ namespace TabloidCLI
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
+                    //there's something here i dont understand.  i can't get this sql query to work outside this method
+                    //need to find out why, maybe it has something to do with the $"%{______}%" on line 214?
                     cmd.CommandText = @"SELECT a.id,
                                                a.FirstName,
                                                a.LastName,
@@ -206,9 +210,10 @@ namespace TabloidCLI
                                                LEFT JOIN AuthorTag at on a.Id = at.AuthorId
                                                LEFT JOIN Tag t on t.Id = at.TagId
                                          WHERE t.Name LIKE @name";
+                    
                     cmd.Parameters.AddWithValue("@name", $"%{tagName}%");
                     SqlDataReader reader = cmd.ExecuteReader();
-
+                    //building our author objects that got in the searchResult's list
                     SearchResults<Author> results = new SearchResults<Author>();
                     while (reader.Read())
                     {
