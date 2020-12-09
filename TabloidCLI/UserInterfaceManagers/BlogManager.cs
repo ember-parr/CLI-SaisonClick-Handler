@@ -36,6 +36,7 @@ namespace TabloidCLI.UserInterfaceManagers
 
             Console.Write("> ");
             string choice = Console.ReadLine();
+
             switch (choice)
             {
                 case "1":
@@ -46,27 +47,28 @@ namespace TabloidCLI.UserInterfaceManagers
                     return this;
                 case "2":
                     Console.Clear();
-                    List();
-                    return this;
-                //case "2":
-                //    Blog blog = Choose();
-                //    if (blog == null)
-                //    {
-                //        return this;
-                //    }
-                //    else
-                //    {
-                //        return new BlogDetailManager(this, _connectionString, author.Id);
-                //    }
+                    Blog blog = Choose();
+                    if (blog == null)
+                    {
+                        return this;
+                    }
+                    else
+                    {
+                        return new BlogDetailManager(this, _connectionString, blog.Id);
+                    }
                 case "3":
                     Console.Clear();
                     Add();
                     return this;
                 case "4":
                     Console.Clear();
-                    Edit();
+                    Add();
                     return this;
                 case "5":
+                    Console.Clear();
+                    Edit();
+                    return this;
+                case "6":
                     Console.Clear();
                     Remove();
                     return this;
