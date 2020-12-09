@@ -210,7 +210,7 @@ namespace TabloidCLI
                                                LEFT JOIN AuthorTag at on a.Id = at.AuthorId
                                                LEFT JOIN Tag t on t.Id = at.TagId
                                          WHERE t.Name LIKE @name";
-                    
+                    //the % lets you search by only one character and return results that include that character
                     cmd.Parameters.AddWithValue("@name", $"%{tagName}%");
                     SqlDataReader reader = cmd.ExecuteReader();
                     //building our author objects that got in the searchResult's list
