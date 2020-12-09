@@ -26,12 +26,16 @@ namespace TabloidCLI.UserInterfaceManagers
         public IUserInterfaceManager Execute()
         {
             Post post = _postRepository.Get(_postId);
-            Console.WriteLine($"{post.Title} Details");
+            Console.WriteLine("------------------------------");
+            Console.WriteLine($"{post.Title} Details          ");
+            Console.WriteLine("------------------------------");
             Console.WriteLine(" 1) View");
             Console.WriteLine(" 2) Add Tag");
             Console.WriteLine(" 3) Remove Tag");
             Console.WriteLine(" 4) Note Management");
             Console.WriteLine(" 0) Go Back");
+            Console.WriteLine("------------------------------");
+            Console.WriteLine();
 
             Console.Write("> ");
             string choice = Console.ReadLine();
@@ -42,18 +46,18 @@ namespace TabloidCLI.UserInterfaceManagers
                     Console.Clear();
                     View();
                     return this;
-                case "2":
-                    Console.Clear();
-                    AddTag();
-                    return this;
-                case "3":
-                    Console.Clear();
-                    Edit();
-                    return this;
-                case "4":
-                    Console.Clear();
-                    RemoveTag();
-                    return this;
+                //case "2":
+                //    Console.Clear();
+                //    AddTag();
+                //    return this;
+                //case "3":
+                //    Console.Clear();
+                //    Edit();
+                //    return this;
+                //case "4":
+                //    Console.Clear();
+                //    RemoveTag();
+                //    return this;
                 case "0":
                     Console.Clear();
                     return _parentUI;
@@ -67,7 +71,9 @@ namespace TabloidCLI.UserInterfaceManagers
         private void View()
         {
             Post post = _postRepository.Get(_postId);
-            Console.WriteLine($"Post Title: {post.Title}");
+            Console.WriteLine("------------------------------");
+            Console.WriteLine($"{post.Title} Details          ");
+            Console.WriteLine("------------------------------");
             Console.WriteLine($"Author: {post.Author.FirstName} {post.Author.LastName}");
             Console.WriteLine($"Blog: {post.Blog.Title}");
             Console.WriteLine($"Published: {post.PublishDateTime}");
@@ -76,8 +82,11 @@ namespace TabloidCLI.UserInterfaceManagers
 
 
             Console.WriteLine();
-            Console.Write("Press any key to go back to Post Menu");
+            Console.WriteLine("Press any key to go back to Post Menu");
             Console.ReadKey();
+            Console.Clear();
         }
+
+        
     }
 }

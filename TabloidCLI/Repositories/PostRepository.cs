@@ -58,7 +58,79 @@ namespace TabloidCLI.Repositories
 
         public Post Get(int id)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT p.Id AS PostId,
+                                            p.Title,
+                                            p.URL,
+                                            p.PublishDateTime,
+                                            t.Id AS TagId,
+                                            t.Name AS TagName,
+                                            a.FirstName AS AuthorFirstName,
+                                            a.LastName AS AuthorLastName,
+                                            p.BlogId AS BlogId,
+                                            p.AuthorId,
+                                            a.FirstName AS FirstName,
+                                            a.LastName AS LastName,
+                                            a.Bio AS Bio,                                            
+                                            b.Title AS BlogTitle,
+                                            b.Url AS BlogUrl
+                                        FROM Post p 
+                                            LEFT JOIN PostTag pt on p.Id = pt.PostId
+                                            LEFT JOIN Tag t on t.Id = pt.TagId
+                                            JOIN Blog b ON p.BlogId = b.Id
+                                            JOIN Author a ON p.AuthorId = a.Id
+                                        WHERE p.Id = @id";
+
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    Post post = null;
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        if (post == null)
+                        {
+                            post = new Post()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("PostId")),
+                                Title = reader.GetString(reader.GetOrdinal("Title")),
+                                Url = reader.GetString(reader.GetOrdinal("Url")),
+                                PublishDateTime = reader.GetDateTime(reader.GetOrdinal("PublishDateTime")),
+                                Author = new Author()
+                                {
+                                    Id = reader.GetInt32(reader.GetOrdinal("AuthorId")),
+                                    FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
+                                    LastName = reader.GetString(reader.GetOrdinal("LastName")),
+                                    Bio = reader.GetString(reader.GetOrdinal("Bio")),
+                                },
+                                Blog = new Blog()
+                                {
+                                    Id = reader.GetInt32(reader.GetOrdinal("BlogId")),
+                                    Title = reader.GetString(reader.GetOrdinal("BlogTitle")),
+                                    Url = reader.GetString(reader.GetOrdinal("BlogUrl")),
+                                }
+                            };
+                        }
+
+                        //if (!reader.IsDBNull(reader.GetOrdinal("TagId")))
+                        //{
+                        //    post.Tags.Add(new Tag()
+                        //    {
+                        //        Id = reader.GetInt32(reader.GetOrdinal("TagId")),
+                        //        Name = reader.GetString(reader.GetOrdinal("Name"))
+                        //    });
+                        //}
+                    }
+
+                    reader.Close();
+
+                    return post;
+                }
+            }
         }
 
         public List<Post> GetByAuthor(int authorId)
